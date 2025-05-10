@@ -1,14 +1,45 @@
-import React from 'react'
+"use client"
 
 import { Button } from './ui/button'
 import { cn } from '@/lib/utils'
-import { Check, Heart, Info, MessageSquare, Play, Plus } from 'lucide-react'
+import { Check, Heart, Info, MessageSquare, Play } from 'lucide-react'
+import { MaskedImage } from './ui/masked-image'
+import Image from 'next/image'
 
 export default function FilmCard() {
   return (
-    <div className="snap-start h-svh w-full bg-white flex justify-start relative">
-      <div className="absolute inset-0">
-        image
+    <div className="snap-start snap-always h-svh w-full bg-white flex justify-start relative">
+      <div className="absolute inset-0 w-full h-full">
+        <Image
+          src="/qG3RYlIVpTYclR9TYIsy8p7m7AT.jpg"
+          alt="Background"
+          width={600}
+          height={900}
+          className="w-full h-full object-cover filter blur-lg"
+        />
+        <div className="absolute inset-0 bg-black/40" />
+      </div>
+
+      {/* <div className="absolute inset-0 flex items-center justify-center">
+        <Image
+          src="/qG3RYlIVpTYclR9TYIsy8p7m7AT.jpg"
+          alt="Background"
+          width={600}
+          height={900}
+          className="relative z-10"
+        />
+      </div> */}
+
+      <div className="absolute inset-0 flex items-center justify-center">       
+        <MaskedImage
+          src="/qG3RYlIVpTYclR9TYIsy8p7m7AT.jpg"
+          alt="Background"
+          width={600}
+          height={900}
+          variant="shape5"
+          className="relative z-10"
+        />
+
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/60 to-black" />
       </div>
 
