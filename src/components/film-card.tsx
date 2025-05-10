@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 import { Check, Heart, Info, MessageSquare, Play } from 'lucide-react'
 import { MaskedImage } from './ui/masked-image'
 import Image from 'next/image'
+import CommentsModal from './comments-modal'
 
 export default function FilmCard() {
   return (
@@ -101,20 +102,7 @@ export default function FilmCard() {
         </div>
 
         {/* Comentar (estilo GitHub) */}
-        <div className="flex flex-col items-center">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="rounded-full bg-black/30 h-12 w-12"
-          >
-            <MessageSquare
-              className={cn(
-                "h-6 w-6 transition-all duration-300",
-              )}
-            />
-          </Button>
-          <span className="text-xs mt-1">Comentários</span>
-        </div>
+        <CommentsModal />
       </div>
     </div>
   )
