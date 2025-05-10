@@ -1,9 +1,11 @@
-import { Button } from "@/components/ui/button";
+import VerticalFeed from "@/components/vertical-feed";
 
 export default function Home() {
   return (
-    <div>
-      <Button>Ok sou ghibi</Button>
+    <div className="min-h-svh bg-black text-white overflow-hidden">
+      <main className="w-full flex flex-col">
+        <VerticalFeed />
+      </main>
     </div>
   );
 }
