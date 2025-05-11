@@ -1,5 +1,4 @@
-import FavoritesCarousel from "@/components/favorites-carousel";
-import VerticalFeed from "@/components/vertical-feed";
+import VerticalFeed from "@/features/feed/vertical-feed";
 
 export default function Home() {
   return (
