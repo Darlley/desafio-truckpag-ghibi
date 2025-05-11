@@ -16,7 +16,7 @@ export default function VerticalFeed() {
   
   if (status === "pending") return (
     <div className='w-full h-full flex items-center justify-center'>
-      <GhibliIcon className='rounded-full animate-pulse' />
+      <GhibliIcon className='rounded-full animate-pulse bg-none' />
     </div>
   );
   if (status === "error") return <p>Erro ao carregar os filmes.</p>;
