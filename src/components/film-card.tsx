@@ -6,13 +6,50 @@ import { Check, Heart, Info, MessageSquare, Play } from 'lucide-react'
 import { MaskedImage } from './ui/masked-image'
 import Image from 'next/image'
 import CommentsModal from './comments-modal'
+import { forwardRef } from 'react'
+import { MovieType } from '@/types/movie.type'
+import { formatMinutes } from '@/lib/formatDurationTime'
+import { useMediaQuery } from "@uidotdev/usehooks";
 
-export default function FilmCard() {
+const MobileImage = ({ image }: { image: string }) => {
   return (
-    <div className="snap-start snap-always h-svh w-full bg-white flex justify-start relative">
+    <div className="absolute inset-0 flex items-start justify-center">
+      <MaskedImage
+        src={image}
+        alt="Background"
+        width={600}
+        height={900}
+        variant="shape5"
+        className="relative z-[1] object-cover"
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/60 to-black" />
+    </div>
+  )
+}
+const DesktopImage = ({ image }: { image: string }) => {
+  return (
+    <div className="absolute inset-0 flex items-center justify-center">
+      <Image
+        src={image}
+        alt="Background"
+        width={600}
+        height={900}
+        className="h-11/12 w-max object-cover relative z-[1]"
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/60 to-black" />
+    </div>
+  )
+}
+
+const FilmCard = forwardRef<HTMLDivElement, { data: MovieType }>(({ data }: { data: MovieType }, ref) => {
+  const isMobileDevice = useMediaQuery("(max-width: 900px)");
+  const isDesktopDevice = useMediaQuery("(min-width: 900px)");
+
+  return (
+    <div className="snap-start snap-always h-svh w-full bg-white flex justify-start relative movie-card">
       <div className="absolute inset-0 w-full h-full">
         <Image
-          src="/qG3RYlIVpTYclR9TYIsy8p7m7AT.jpg"
+          src={data.movie_banner}
           alt="Background"
           width={600}
           height={900}
@@ -21,38 +58,19 @@ export default function FilmCard() {
         <div className="absolute inset-0 bg-black/40" />
       </div>
 
-      {/* <div className="absolute inset-0 flex items-center justify-center">
-        <Image
-          src="/qG3RYlIVpTYclR9TYIsy8p7m7AT.jpg"
-          alt="Background"
-          width={600}
-          height={900}
-          className="relative z-10"
-        />
-      </div> */}
 
-      <div className="absolute inset-0 flex items-center justify-center">       
-        <MaskedImage
-          src="/qG3RYlIVpTYclR9TYIsy8p7m7AT.jpg"
-          alt="Background"
-          width={600}
-          height={900}
-          variant="shape5"
-          className="relative z-10"
-        />
+      {isMobileDevice && <MobileImage image={data.image} />}
+      {isDesktopDevice && <DesktopImage image={data.image} />}
 
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/60 to-black" />
-      </div>
-
-      <div className="relative h-full flex flex-col justify-end p-6 md:p-12 max-w-3xl">
-        <h1 className="text-4xl md:text-6xl font-bold mb-4">title</h1>
+      <div className="relative h-full flex flex-col justify-end p-6 md:p-12 w-11/12 md:w-6/12 xl:w-1/3 z-10">
+        <h1 className="text-4xl md:text-6xl font-bold mb-4">{data.title}</h1>
         <div className="flex items-center text-sm space-x-2 mb-4">
-          <span className="text-green-500 font-semibold">Match</span>
-          <span>year</span>
-          <span>duration</span>
-          <span className="border border-gray-600 px-1 text-xs">rating</span>
+          <span>{data.release_date}</span>
+          <span>•</span>
+          <span className="border border-gray-600 px-1 text-xs">{formatMinutes(data.running_time)}</span>
+          <span className="text-green-500 font-semibold">{data.rt_score}%</span>
         </div>
-        <p className="text-gray-200 mb-6 line-clamp-3 md:line-clamp-none">description</p>
+        <p className="text-gray-200 mb-6 line-clamp-3 md:line-clamp-none">{data.description}</p>
 
         <div className="flex space-x-3">
           <Button className="px-6">
@@ -101,9 +119,11 @@ export default function FilmCard() {
           <span className="text-xs mt-1">Marcar</span>
         </div>
 
-        {/* Comentar (estilo GitHub) */}
         <CommentsModal />
       </div>
-    </div>
+    </div >
   )
-}
+})
+
+FilmCard.displayName = 'FilmCard'
+export default FilmCard

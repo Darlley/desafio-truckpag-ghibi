@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import { PT_Sans } from "next/font/google";
 import "./globals.css";
+import Providers from "./providers";
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -25,12 +26,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <body
         className={`${nunito.variable} ${ptSans.variable} antialiased relative`}
       >
         <div className="texture" />
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );
