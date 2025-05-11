@@ -12,7 +12,7 @@ import { useMediaQuery } from "@uidotdev/usehooks";
 import useMovieStore, { MovieTypeStore } from '@/store/MovieStore'
 
 const FilmCard = forwardRef<HTMLDivElement, { data: MovieTypeStore }>(({ data }: { data: MovieTypeStore }, ref) => {
-  const { toggleFavorite } = useMovieStore()
+  const { toggleFavorite, toggleWatched } = useMovieStore()
 
   const isMobileDevice = useMediaQuery("(max-width: 900px)");
   const isDesktopDevice = useMediaQuery("(min-width: 900px)");
@@ -63,7 +63,7 @@ const FilmCard = forwardRef<HTMLDivElement, { data: MovieTypeStore }>(({ data }:
         <div className="flex flex-col items-center">
           <Button
             size="icon"
-            variant={data?.favorite ? "secondary" : "default"}
+            variant={data?.favorite ? "ghost" : "default"}
             className="rounded-full"
             onClick={() => {
               try {
@@ -76,27 +76,35 @@ const FilmCard = forwardRef<HTMLDivElement, { data: MovieTypeStore }>(({ data }:
             <Heart
               className={cn(
                 "size-4",
-                data?.favorite && "text-red-500 fill-red-500"
+                data?.favorite ? "text-red-500 fill-red-500" : ""
               )}
             />
           </Button>
-          <span className="text-xs mt-1">Favoritar</span>
+          <span className="text-xs mt-1">{data?.favorite ? "Favorito" : "Favoritar"}</span>
         </div>
 
         {/* Assistido */}
         <div className="flex flex-col items-center">
           <Button
-            variant="default"
+            variant={data?.watched ? "ghost" : "default"}
             size="icon"
             className="rounded-full"
+            onClick={() => {
+              try {
+                toggleWatched(data.id)
+              } catch (error) {
+                console.error("Error toggling favorite:", error)
+              }
+            }}
           >
             <Check
               className={cn(
                 "size-4",
+                data?.watched ? "text-teal-500" : ""
               )}
             />
           </Button>
-          <span className="text-xs mt-1">Marcar</span>
+          <span className="text-xs mt-1">{data?.watched ? "Assistido" : "Assistir"}</span>
         </div>
 
         <CommentsModal />

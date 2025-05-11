@@ -18,7 +18,7 @@ export type MovieStore = {
   movies: Array<MovieTypeStore>;
   setFilms: (movies: MovieTypeStore[]) => void;
   toggleFavorite: (id: string) => void;
-  // markWatched: (id: string) => void;
+  toggleWatched: (id: string) => void;
   // addRating: (id: string, note: MovieAvailable) => void;
 };
 
@@ -26,14 +26,6 @@ const useMovieStore = create<MovieStore>()(
   persist(
     (set) => ({
       movies: [],
-
-      toggleFavorite: (id: string) => {
-        set((state) => ({
-          movies: state.movies.map((movie) =>
-            movie.id === id ? { ...movie, favorite: !movie.favorite } : movie
-          ),
-        }));
-      },
 
       setFilms: (movies: MovieTypeStore[]) => {
         set((state) => {
@@ -43,6 +35,22 @@ const useMovieStore = create<MovieStore>()(
 
           return { movies: [...state.movies, ...newMovies] };
         });
+      },
+
+      toggleFavorite: (id: string) => {
+        set((state) => ({
+          movies: state.movies.map((movie) =>
+            movie.id === id ? { ...movie, favorite: !movie.favorite } : movie
+          ),
+        }));
+      },
+
+      toggleWatched: (id: string) => {
+        set((state) => ({
+          movies: state.movies.map((movie) =>
+            movie.id === id ? { ...movie, watched: !movie.watched } : movie
+          ),
+        }));
       },
 
     }),
