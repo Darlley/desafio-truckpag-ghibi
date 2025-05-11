@@ -4,6 +4,8 @@ Este projeto é uma aplicação web desenvolvida como parte do desafio técnico 
 
 Para a UI me inspirei no feed do TikTok junto com os cards de filmes em destaque da Netflix.
 
+![Captura de tela_11-5-2025_15194_localhost](https://github.com/user-attachments/assets/d9d58c09-f602-44c5-8363-883b5012311a)
+
 ---
 
 ## 🚀 Funcionalidades
