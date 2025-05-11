@@ -1,67 +1,116 @@
 # Desafio TruckPag - Filmes Studio Ghibli
 
-Este projeto é uma aplicação web desenvolvida como parte do desafio técnico da TruckPag. Ele exibe uma lista de filmes do Studio Ghibli, permitindo aos usuários visualizar detalhes, marcar como favoritos, assistidos e adicionar avaliações pessoais.
+Este projeto é uma aplicação web desenvolvida como parte do desafio técnico da **TruckPag**. Ele exibe uma lista de filmes do **Studio Ghibli**, permitindo aos usuários visualizar detalhes, marcar como favoritos, assistidos e adicionar avaliações pessoais.
 
-## Funcionalidades
+Para a UI me inspirei no feed do TikTok junto com os cards de filmes em destaque da Netflix.
 
-*   Visualização de uma lista de filmes do Studio Ghibli em um feed vertical.
-*   Detalhes do filme: título, imagem, banner, data de lançamento, duração, descrição, diretor, produtor e pontuação RT.
-*   Marcar filmes como **Favoritos**.
-*   Marcar filmes como **Assistidos**.
-*   Adicionar **Avaliação** (nota de 1 a 5 estrelas) e **Comentário** para cada filme.
-*   Interface responsiva para dispositivos móveis e desktop.
-*   Persistência das interações do usuário (favoritos, assistidos, avaliações) no `localStorage`.
-*   Modal para filtrar resultados (UI implementada, funcionalidade de filtro pendente).
-*   Modal para visualização de comentários (UI implementada com dados estáticos, funcionalidade de submissão pendente).
+---
 
-## Tech Stack
+## 🚀 Funcionalidades
 
-*   **Frontend:**
-    *   Next.js (v15) - Framework React com App Router.
-    *   React (v19) - Biblioteca para construção de interfaces de usuário.
-    *   TypeScript - Superset do JavaScript que adiciona tipagem estática.
-    *   Tailwind CSS (v4) - Framework CSS utility-first.
-    *   TanStack Query (React Query) (v5) - Para gerenciamento de estado do servidor, caching, e data fetching.
-    *   Zustand (v5) - Gerenciamento de estado global do cliente, simples e flexível.
-    *   Axios - Cliente HTTP baseado em Promises.
-    *   Radix UI - Primitivos de UI acessíveis e não estilizados (usados através de componentes customizados na pasta `src/components/ui/`).
-    *   Lucide React - Ícones.
-    *   `clsx` & `tailwind-merge` - Utilitários para classes CSS condicionais.
-*   **API Externa:**
-    *   Ghibli API - Para buscar os dados dos filmes.
+* Exibição de uma lista de filmes do Studio Ghibli em um feed vertical.
+* Visualização de detalhes do filme: título, imagem, banner, data de lançamento, duração, descrição, diretor, produtor e pontuação.
+* Marcar filmes como **Favoritos**.
+* Marcar filmes como **Assistidos**.
+* Adicionar **Avaliação** (nota de 1 a 5 estrelas) e **Comentário** por filme.
+* Interface **responsiva** para dispositivos móveis e desktop.
+* Persistência de interações do usuário (`localStorage`).
+* Modal para **filtros** (com muita ajuda da IA nesta parte para ser sincero).
+* Modal para **comentários** (UI implementada com dados estáticos, a ideia era implementar o [utterances](https://github.com/utterance/utterances)).
 
-## Estrutura do Projeto (`src/`)
+---
 
-src/ ├── app/ # Rotas, layouts e páginas do Next.js (App Router) │ ├── globals.css # Estilos globais e variáveis de tema Tailwind │ ├── layout.tsx # Layout principal da aplicação │ ├── page.tsx # Página inicial │ └── providers.tsx # Provedores globais (ex: React Query) ├── components/ # Componentes de UI reutilizáveis │ ├── ui/ # Componentes de UI base (botões, modais, etc.) │ ├── available-modal.tsx # Modal para avaliação de filmes │ ├── comments-modal.tsx # Modal para comentários │ ├── film-card.tsx # Card de exibição de um filme │ └── filter-modal.tsx # Modal de filtros ├── features/ # Componentes específicos de funcionalidades │ └── feed/ │ └── vertical-feed.tsx # Componente do feed vertical de filmes ├── hooks/ # Hooks customizados React │ └── useFetchFilms.ts # Hook para buscar filmes e integrar com Zustand ├── lib/ # Funções utilitárias │ ├── formatDurationTime.ts # Formatação de tempo │ └── utils.ts # Utilitário cn para classes ├── services/ # Configuração de serviços externos │ ├── api.ts # Cliente Axios para a API Ghibli │ └── queryClient.ts # Configuração do TanStack Query Client ├── store/ # Gerenciamento de estado global (Zustand) │ └── MovieStore.ts # Store para o estado dos filmes (favoritos, notas, etc.) └── types/ # Definições de tipos TypeScript └── movie.type.ts # Tipos relacionados aos filmes
+## 🧪 Tech Stack
 
+### Frontend
 
-## Primeiros Passos
+* **Next.js (v15)** – Framework React com App Router.
+* **React (v19)** – Biblioteca para construção de interfaces.
+* **TypeScript** – Superset do JavaScript com tipagem estática.
+* **Tailwind CSS (v4)** – Framework CSS utility-first.
+* **TanStack Query (v5)** – Gerenciamento de cache e requisições (React Query).
+* **Zustand (v5)** – Gerenciamento de estado global e armazenamento no LocalStorage.
+* **Axios** – Cliente HTTP baseado em Promises.
+* **ShadCN** – Primitivos de UI acessíveis (usados via componentes customizados).
+* **Matsu** - Componentes do Shdcn customizados inspirados nos estilos do Studio Ghibli.
+* **Lucide React** – Ícones SVG.
 
-### Pré-requisitos
+### API Externa
 
-*   Node.js (versão 18.x ou superior recomendada)
-*   npm, yarn ou pnpm
+* **Ghibli API** – Fornece os dados dos filmes.
 
-### Instalação
+---
 
-1.  Clone o repositório:
-    ```bash
-    git clone <url-do-repositorio>
-    cd desafio-truckpag-ghibi
-    ```
+## 📁 Estrutura do Projeto
 
-2.  Instale as dependências:
-    ```bash
-    npm install
-    # ou
-    yarn install
-    # ou
-    pnpm install
-    ```
+```
+src/
+├── app/                 # Rotas, layouts e páginas (App Router)
+│   ├── globals.css      # Estilos globais e temas
+│   ├── layout.tsx       # Layout principal da aplicação
+│   ├── page.tsx         # Página inicial
+│   └── providers.tsx    # Provedores globais (ex: React Query)
+│
+├── components/          # Componentes reutilizáveis de UI
+│   ├── ui/              # Componentes base do shadcn e Matsu (botões, modais etc.)
+│   ├── available-modal.tsx 
+│   ├── comments-modal.tsx
+│   ├── film-card.tsx
+│   └── filter-modal.tsx
+│
+├── features/            # Funcionalidades específicas
+│   └── feed/
+│       └── vertical-feed.tsx
+│
+├── hooks/               # Hooks customizados (TanStack Query)
+│   └── useFetchFilms.ts
+│
+├── lib/                 # Utilitários e funções auxiliares
+│   ├── formatDurationTime.ts
+│   └── utils.ts         # Função `cn` para classes
+│
+├── services/            # Configuração de serviços externos
+│   ├── api.ts           # Cliente Axios
+│   └── queryClient.ts   # Instância do TanStack Query
+│
+├── store/               # Estados globais (Zustand)
+│   └── MovieStore.ts
+│
+└── types/               # Tipos TypeScript
+    └── movie.type.ts
+```
 
-### Rodando em Desenvolvimento
+---
 
-Para iniciar o servidor de desenvolvimento:
+## 🧰 Primeiros Passos
+
+### ✅ Pré-requisitos
+
+* Node.js (v18.x ou superior)
+* Gerenciador de pacotes npm
+
+### 📦 Instalação
+
+1. Clone o repositório:
+
+```bash
+git clone https://github.com/Darlley/desafio-truckpag-ghibi
+cd desafio-truckpag-ghibli
+```
+
+2. Instale as dependências:
+
+```bash
+npm install
+# ou
+yarn install
+# ou
+pnpm install
+```
+
+### 🚀 Rodando em Desenvolvimento
+
+Inicie o servidor:
 
 ```bash
 npm run dev
@@ -69,13 +118,15 @@ npm run dev
 yarn dev
 # ou
 pnpm dev
+```
 
-Abra http://localhost:3000 no seu navegador para ver a aplicação.
+Acesse `http://localhost:3000` no seu navegador.
 
-Scripts Disponíveis
-No package.json, você encontrará os seguintes scripts:
+---
 
-npm run dev: Inicia a aplicação em modo de desenvolvimento.
-npm run build: Compila a aplicação para produção.
-npm run start: Inicia um servidor de produção (após o build).
-npm run lint: Executa o linter (ESLint) para verificar o código.
+## 📜 Scripts Disponíveis
+
+* `npm run dev` – Inicia o servidor de desenvolvimento.
+* `npm run build` – Compila a aplicação para produção.
+* `npm run start` – Inicia o servidor de produção (após o build).
+* `npm run lint` – Executa o linter (ESLint) para verificar a qualidade do código.
