@@ -2,46 +2,18 @@
 
 import { Button } from './ui/button'
 import { cn } from '@/lib/utils'
-import { Check, Heart, Info, MessageSquare, Play } from 'lucide-react'
+import { Check, Heart, Info, Play } from 'lucide-react'
 import { MaskedImage } from './ui/masked-image'
 import Image from 'next/image'
 import CommentsModal from './comments-modal'
 import { forwardRef } from 'react'
-import { MovieType } from '@/types/movie.type'
 import { formatMinutes } from '@/lib/formatDurationTime'
 import { useMediaQuery } from "@uidotdev/usehooks";
+import useMovieStore, { MovieTypeStore } from '@/store/MovieStore'
 
-const MobileImage = ({ image }: { image: string }) => {
-  return (
-    <div className="absolute inset-0 flex items-start justify-center">
-      <MaskedImage
-        src={image}
-        alt="Background"
-        width={600}
-        height={900}
-        variant="shape5"
-        className="relative z-[1] object-cover"
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/60 to-black" />
-    </div>
-  )
-}
-const DesktopImage = ({ image }: { image: string }) => {
-  return (
-    <div className="absolute inset-0 flex items-center justify-center">
-      <Image
-        src={image}
-        alt="Background"
-        width={600}
-        height={900}
-        className="h-11/12 w-max object-cover relative z-[1]"
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/60 to-black" />
-    </div>
-  )
-}
+const FilmCard = forwardRef<HTMLDivElement, { data: MovieTypeStore }>(({ data }: { data: MovieTypeStore }, ref) => {
+  const { toggleFavorite } = useMovieStore()
 
-const FilmCard = forwardRef<HTMLDivElement, { data: MovieType }>(({ data }: { data: MovieType }, ref) => {
   const isMobileDevice = useMediaQuery("(max-width: 900px)");
   const isDesktopDevice = useMediaQuery("(min-width: 900px)");
 
@@ -90,13 +62,21 @@ const FilmCard = forwardRef<HTMLDivElement, { data: MovieType }>(({ data }: { da
         {/* Favoritar */}
         <div className="flex flex-col items-center">
           <Button
-            variant="ghost"
             size="icon"
-            className="rounded-full bg-black/30 h-12 w-12"
+            variant={data?.favorite ? "secondary" : "default"}
+            className="rounded-full"
+            onClick={() => {
+              try {
+                toggleFavorite(data.id)
+              } catch (error) {
+                console.error("Error toggling favorite:", error)
+              }
+            }}
           >
             <Heart
               className={cn(
-                "h-6 w-6 transition-all duration-300"
+                "size-4",
+                data?.favorite && "text-red-500 fill-red-500"
               )}
             />
           </Button>
@@ -106,13 +86,13 @@ const FilmCard = forwardRef<HTMLDivElement, { data: MovieType }>(({ data }: { da
         {/* Assistido */}
         <div className="flex flex-col items-center">
           <Button
-            variant="ghost"
+            variant="default"
             size="icon"
-            className="rounded-full bg-black/30 h-12 w-12"
+            className="rounded-full"
           >
             <Check
               className={cn(
-                "h-6 w-6 transition-all duration-300",
+                "size-4",
               )}
             />
           </Button>
@@ -127,3 +107,35 @@ const FilmCard = forwardRef<HTMLDivElement, { data: MovieType }>(({ data }: { da
 
 FilmCard.displayName = 'FilmCard'
 export default FilmCard
+
+
+const MobileImage = ({ image }: { image: string }) => {
+  return (
+    <div className="absolute inset-0 flex items-start justify-center">
+      <MaskedImage
+        src={image}
+        alt="Background"
+        width={600}
+        height={900}
+        variant="shape5"
+        className="relative z-[1] object-cover"
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/60 to-black" />
+    </div>
+  )
+}
+
+const DesktopImage = ({ image }: { image: string }) => {
+  return (
+    <div className="absolute inset-0 flex items-center justify-center">
+      <Image
+        src={image}
+        alt="Background"
+        width={600}
+        height={900}
+        className="h-11/12 w-max object-cover relative z-[1]"
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/60 to-black" />
+    </div>
+  )
+}

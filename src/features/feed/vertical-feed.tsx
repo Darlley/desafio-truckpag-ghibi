@@ -3,6 +3,7 @@
 import FilmCard from '@/components/film-card'
 import { Button } from '@/components/ui/button'
 import { useFetchFilms } from '@/hooks/useFetchFilms'
+import { MovieTypeStore } from '@/store/MovieStore'
 import { MovieType } from '@/types/movie.type'
 import { ChevronDown } from 'lucide-react'
 import React, { useEffect, useRef, useState } from 'react'
@@ -29,7 +30,7 @@ export default function VerticalFeed() {
       <div className="snap-y snap-mandatory h-svh overflow-y-auto overflow-x-hidden">
 
 
-        {data.map((movie: MovieType, index: number) => (
+        {data.map((movie: MovieTypeStore, index: number) => (
           <FilmCard
             key={`list-movies--id-${movie.id}`}
             ref={(el) => {

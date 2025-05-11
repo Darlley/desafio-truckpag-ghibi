@@ -1,11 +1,10 @@
 import React from 'react'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog'
-import { Label } from './ui/label'
 import { Button } from './ui/button'
 import { MessageSquare } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Textarea } from './ui/textarea'
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
+import { Avatar, AvatarFallback } from './ui/avatar'
 
 export default function CommentsModal() {
    const staticComments = [
@@ -30,13 +29,13 @@ export default function CommentsModal() {
       <DialogTrigger asChild>
         <div className="flex flex-col items-center">
           <Button
-            variant="ghost"
+            variant="default"
             size="icon"
-            className="rounded-full bg-black/30 h-12 w-12"
+            className="rounded-full"
           >
             <MessageSquare
               className={cn(
-                "h-6 w-6 transition-all duration-300",
+                "size-4",
               )}
             />
           </Button>

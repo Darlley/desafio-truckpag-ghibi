@@ -16,6 +16,7 @@ export type MovieTypeStore = {
 
 export type MovieStore = {
   movies: Array<MovieTypeStore>;
+  setFilms: (movies: MovieTypeStore[]) => void;
   toggleFavorite: (id: string) => void;
   // markWatched: (id: string) => void;
   // addRating: (id: string, note: MovieAvailable) => void;
@@ -23,7 +24,7 @@ export type MovieStore = {
 
 const useMovieStore = create<MovieStore>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       movies: [],
 
       toggleFavorite: (id: string) => {
@@ -33,9 +34,20 @@ const useMovieStore = create<MovieStore>()(
           ),
         }));
       },
+
+      setFilms: (movies: MovieTypeStore[]) => {
+        set((state) => {
+          const newMovies = movies.filter(
+            (movie) => !state.movies.some((stored) => stored.id === movie.id)
+          );
+
+          return { movies: [...state.movies, ...newMovies] };
+        });
+      },
+
     }),
     {
-      name: 'movie-storage',
+      name: 'movies',
       storage: createJSONStorage(() => localStorage),
     }
   )
