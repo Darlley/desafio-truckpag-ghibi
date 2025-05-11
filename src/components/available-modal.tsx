@@ -11,6 +11,7 @@ import useMovieStore, { MovieTypeStore } from '@/store/MovieStore'
 
 export default function AvailableModal({ movie }: { movie: MovieTypeStore }) {
   const [hoveredRating, setHoveredRating] = useState(0)
+  const [rating, setRating] = useState(movie?.note?.rating || 0)
   const [comment, setComment] = useState(movie?.note?.comment || "")
   const { addRating } = useMovieStore()
 
@@ -22,11 +23,9 @@ export default function AvailableModal({ movie }: { movie: MovieTypeStore }) {
             variant="secondary"
           >
             <Star
-              className={cn(
-                "size-4",
-              )}
+              className="stroke-1 size-6 stroke-yellow-600 fill-yellow-400"
             />
-            Avaliação
+            {movie?.note?.rating || 0} stars
           </Button>
         </div>
       </DialogTrigger>
@@ -49,18 +48,15 @@ export default function AvailableModal({ movie }: { movie: MovieTypeStore }) {
                 const starValue = index + 1
                 return (
                   <button
-                    key={starValue}
+                    key={`rating-movieid-${movie.id}-star${starValue}`}
                     className="p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 rounded-full"
                     onMouseEnter={() => setHoveredRating(starValue)}
                     onMouseLeave={() => setHoveredRating(0)}
-                    onClick={() => addRating(movie.id, {
-                      comment,
-                      rating: starValue,
-                    })}
+                    onClick={() => setRating(starValue)}
                     aria-label={`Rate ${starValue} out of 5 stars`}
                   >
                     <Star
-                      className={`stroke-1 size-6 ${starValue <= (hoveredRating || movie?.note?.rating || 0) ? "text-yellow-400 fill-yellow-400" : ""
+                      className={`stroke-1 size-6 ${starValue <= (hoveredRating || rating) ? "text-yellow-400 fill-yellow-400" : ""
                         }`}
                     />
                   </button>
@@ -69,29 +65,29 @@ export default function AvailableModal({ movie }: { movie: MovieTypeStore }) {
             </div>
           </div>
 
-          <div className='flex'>
-
-
-
-            <Textarea
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              placeholder="Adicione seu comentário..."
-              className="w-full rounded p-2 text-sm focus:outline-none focus:ring-1 min-h-[80px]"
-            />
-          </div>
+          <Textarea
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            placeholder="Adicione seu comentário..."
+            className="w-full rounded p-2 text-sm focus:outline-none focus:ring-1 min-h-[80px]"
+          />
         </div>
 
 
         <DialogFooter>
           <div className="w-full">
-            <div className="flex justify-end mt-2">
-              <Button onClick={() => {
-                addRating(movie.id, {
-                  comment,
-                  rating: movie?.note?.rating || 0,
-                })
-              }}>
+            <div className="flex justify-between mt-2">
+              <div className='flex items-center text-sm'>
+                <Star
+                  className="stroke-1 size-6 text-yellow-400 fill-yellow-400"
+                />
+                {movie?.note?.rating || 0} stars
+              </div>
+              <Button
+                disabled={movie?.note?.comment === comment && movie?.note?.rating === rating}
+                onClick={() => {
+                  addRating(movie.id, { comment, rating })
+                }}>
                 Salvar
               </Button>
             </div>
