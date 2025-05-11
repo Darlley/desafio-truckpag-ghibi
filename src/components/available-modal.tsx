@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils'
 import { Textarea } from './ui/textarea'
 import { Avatar, AvatarFallback } from './ui/avatar'
 import useMovieStore, { MovieTypeStore } from '@/store/MovieStore'
+import { toast } from 'sonner'
 
 export default function AvailableModal({ movie }: { movie: MovieTypeStore }) {
   const [hoveredRating, setHoveredRating] = useState(0)
@@ -86,7 +87,14 @@ export default function AvailableModal({ movie }: { movie: MovieTypeStore }) {
               <Button
                 disabled={movie?.note?.comment === comment && movie?.note?.rating === rating}
                 onClick={() => {
-                  addRating(movie.id, { comment, rating })
+                  try {
+                    addRating(movie.id, { comment, rating })
+                    toast("Avaliação salva com sucesso ✅")
+                  }
+                  catch (error) {
+                    console.error("Error adding rating:", error)
+                    toast("Erro ao salvar avaliação ❌")
+                  }
                 }}>
                 Salvar
               </Button>

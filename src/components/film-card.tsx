@@ -2,17 +2,17 @@
 
 import { Button } from './ui/button'
 import { cn } from '@/lib/utils'
-import { Check, Heart, Info, Play } from 'lucide-react'
+import { Check, Heart, Play } from 'lucide-react'
 import { MaskedImage } from './ui/masked-image'
 import Image from 'next/image'
 import CommentsModal from './comments-modal'
-import { forwardRef } from 'react'
 import { formatMinutes } from '@/lib/formatDurationTime'
 import { useMediaQuery } from "@uidotdev/usehooks";
 import useMovieStore, { MovieTypeStore } from '@/store/MovieStore'
 import AvailableModal from './available-modal'
+import { toast } from 'sonner'
 
-const FilmCard = forwardRef<HTMLDivElement, { data: MovieTypeStore }>(({ data }: { data: MovieTypeStore }, ref) => {
+export default function FilmCard({ data }: { data: MovieTypeStore }) {
   const { toggleFavorite, toggleWatched } = useMovieStore()
 
   const isMobileDevice = useMediaQuery("(max-width: 900px)");
@@ -67,8 +67,10 @@ const FilmCard = forwardRef<HTMLDivElement, { data: MovieTypeStore }>(({ data }:
             onClick={() => {
               try {
                 toggleFavorite(data.id)
+                toast(data?.favorite ? "Removido dos favoritos ❌" : "Adicionado aos favoritos ✅")
               } catch (error) {
                 console.error("Error toggling favorite:", error)
+                toast("Erro ao marcar como favorito ❌")
               }
             }}
           >
@@ -91,8 +93,10 @@ const FilmCard = forwardRef<HTMLDivElement, { data: MovieTypeStore }>(({ data }:
             onClick={() => {
               try {
                 toggleWatched(data.id)
+                toast(data?.watched ? "Removido como assistido ❌" : "Marcado como assistido ✅")
               } catch (error) {
                 console.error("Error toggling favorite:", error)
+                toast("Erro ao marcar como assistido ❌")
               }
             }}
           >
@@ -110,11 +114,7 @@ const FilmCard = forwardRef<HTMLDivElement, { data: MovieTypeStore }>(({ data }:
       </div>
     </div >
   )
-})
-
-FilmCard.displayName = 'FilmCard'
-export default FilmCard
-
+}
 
 const MobileImage = ({ image }: { image: string }) => {
   return (
