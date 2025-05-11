@@ -1,4 +1,6 @@
 import apiClient from "@/services/api";
+import useMovieStore from "@/store/MovieStore";
+import { MovieType } from "@/types/movie.type";
 import { useQuery } from "@tanstack/react-query";
 
 const QUERY_PARAMS = {
@@ -22,8 +24,27 @@ const fetchFilms = async () => {
 };
 
 export const useFetchFilms = () => {
-  return useQuery({
+  const { data, ...rest } = useQuery({
     queryKey: ["films"],
     queryFn: fetchFilms,
   });
+
+  
+  /**
+   * Ocorre a junção dos filmes retornados pela API com React Query 
+   * e os filmes armazenados no localStorage pelo Zustand
+   * com estados da aplicação (favorito, assistido, avaliação).
+  */
+
+  const { movies: storedMovies } = useMovieStore();
+
+  const moviesWithState = data?.map((movie: MovieType) => {
+    const storedMovie = storedMovies.find((current) => current.id === movie.id) || {};
+    return { ...movie, ...storedMovie };
+  });
+
+  return {
+    data: moviesWithState,
+    ...rest
+  };
 };
