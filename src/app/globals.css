@@ -177,3 +177,51 @@
     pointer-events: none;
   }
 }
+
+/* GHIBLI LOGO ANIMATION */
+/* 
+#logotipo {
+  animation: ghibli-text 1s ease 2s forwards;
+}
+#head {
+  animation: ghibli-text 1s ease 0s forwards;
+}
+#olhos {
+  animation: growp-text 1s ease 0s forwards;
+}
+
+@keyframes ghibli-text {
+  0% {
+    fill-opacity: 0;
+    stroke-width: 0;
+    stroke-dasharray: 0 1000;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  30% {
+    fill-opacity: 0;
+    stroke-width: 1;
+    stroke-dasharray: 150 0;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  50% {
+    fill-opacity: 1;
+    stroke-width: 1;
+    stroke-dasharray: 150 0;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  100% {
+    fill-opacity: 1;
+    stroke-width: 1;
+    stroke-dasharray: 150 0;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+#ghibli-logo {
+  opacity: 0;
+  animation: ghibli-text 2s ease 4s forwards;
+} */

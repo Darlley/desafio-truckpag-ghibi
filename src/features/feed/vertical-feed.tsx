@@ -6,15 +6,19 @@ import useMovieStore, { MovieTypeStore } from '@/store/MovieStore'
 import { AlertCircle } from 'lucide-react'
 import FilmCard from '@/components/film-card'
 import FilterModal from '@/components/filter-modal'
+import GhibliIcon from '@/components/icons/ghibli-icon'
 
 export default function VerticalFeed() {
   const { status } = useFetchFilms()
   const { getFilteredMovies } = useMovieStore()
   
-  // Obter filmes filtrados
   const filteredMovies = getFilteredMovies()
   
-  if (status === "pending") return <p>Carregando...</p>;
+  if (status === "pending") return (
+    <div className='w-full h-full flex items-center justify-center'>
+      <GhibliIcon className='rounded-full animate-pulse' />
+    </div>
+  );
   if (status === "error") return <p>Erro ao carregar os filmes.</p>;
 
   return (
