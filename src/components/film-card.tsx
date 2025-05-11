@@ -10,6 +10,7 @@ import { forwardRef } from 'react'
 import { formatMinutes } from '@/lib/formatDurationTime'
 import { useMediaQuery } from "@uidotdev/usehooks";
 import useMovieStore, { MovieTypeStore } from '@/store/MovieStore'
+import AvailableModal from './available-modal'
 
 const FilmCard = forwardRef<HTMLDivElement, { data: MovieTypeStore }>(({ data }: { data: MovieTypeStore }, ref) => {
   const { toggleFavorite, toggleWatched } = useMovieStore()
@@ -48,9 +49,7 @@ const FilmCard = forwardRef<HTMLDivElement, { data: MovieTypeStore }>(({ data }:
           <Button className="px-6">
             <Play className="mr-2 h-5 w-5" /> Assistir
           </Button>
-          <Button variant="secondary" className="px-6">
-            <Info className="mr-2 h-5 w-5" /> Mais Informações
-          </Button>
+          <AvailableModal movie={data} />
         </div>
       </div>
 

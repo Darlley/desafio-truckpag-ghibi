@@ -19,7 +19,7 @@ export type MovieStore = {
   setFilms: (movies: MovieTypeStore[]) => void;
   toggleFavorite: (id: string) => void;
   toggleWatched: (id: string) => void;
-  // addRating: (id: string, note: MovieAvailable) => void;
+  addRating: (id: string, note: MovieAvailable) => void;
 };
 
 const useMovieStore = create<MovieStore>()(
@@ -52,6 +52,19 @@ const useMovieStore = create<MovieStore>()(
           ),
         }));
       },
+
+      addRating: (id: string, note: MovieAvailable) => {
+        set((state) => ({
+          movies: state.movies.map((movie) =>
+            movie.id === id
+              ? {
+                  ...movie,
+                  note,
+                }
+              : movie
+          ),
+        }));
+      }
 
     }),
     {
