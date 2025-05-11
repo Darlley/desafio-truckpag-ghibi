@@ -10,6 +10,7 @@ import { formatMinutes } from '@/lib/formatDurationTime'
 import { useMediaQuery } from "@uidotdev/usehooks";
 import useMovieStore, { MovieTypeStore } from '@/store/MovieStore'
 import AvailableModal from './available-modal'
+import { toast } from 'sonner'
 
 export default function FilmCard({ data }: { data: MovieTypeStore }) {
   const { toggleFavorite, toggleWatched } = useMovieStore()
@@ -66,8 +67,10 @@ export default function FilmCard({ data }: { data: MovieTypeStore }) {
             onClick={() => {
               try {
                 toggleFavorite(data.id)
+                toast(data?.favorite ? "Removido dos favoritos ❌" : "Adicionado aos favoritos ✅")
               } catch (error) {
                 console.error("Error toggling favorite:", error)
+                toast("Erro ao marcar como favorito ❌")
               }
             }}
           >
@@ -90,8 +93,10 @@ export default function FilmCard({ data }: { data: MovieTypeStore }) {
             onClick={() => {
               try {
                 toggleWatched(data.id)
+                toast(data?.watched ? "Removido como assistido ❌" : "Marcado como assistido ✅")
               } catch (error) {
                 console.error("Error toggling favorite:", error)
+                toast("Erro ao marcar como assistido ❌")
               }
             }}
           >

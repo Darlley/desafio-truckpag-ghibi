@@ -11,6 +11,7 @@ import { Checkbox } from './ui/checkbox'
 import { Slider } from './ui/slider'
 import { RadioGroup, RadioGroupItem } from './ui/radio-group'
 import useMovieStore from '@/store/MovieStore'
+import { toast } from 'sonner'
 
 export default function FilterModal({ className }: { className?: string }) {
   const { filters, setFilter, resetFilters } = useMovieStore();
@@ -50,12 +51,16 @@ export default function FilterModal({ className }: { className?: string }) {
     setFilter('search', searchValue);
     setFilter('minRating', sliderValue[0]);
     setIsOpen(false);
+
+    toast("Filtros aplicados ✅")
   };
   
   const handleReset = () => {
     resetFilters();
     setSearchValue('');
     setSliderValue([0]);
+
+    toast("Filtros limpos ✅")
   };
   
   // Verificar se há filtros ativos
