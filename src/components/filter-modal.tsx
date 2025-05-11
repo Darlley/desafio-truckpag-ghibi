@@ -193,7 +193,7 @@ export default function FilterModal({ className }: { className?: string }) {
             <Label className="text-base">Ordenar por</Label>
             <RadioGroup
               value={filters.sortBy}
-              onValueChange={(value) => changeSortBy(value as any)}
+              onValueChange={(value) => changeSortBy(value as 'title' | 'running_time' | 'rt_score' | 'rating')}
             >
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="title" id="sort-title" />
